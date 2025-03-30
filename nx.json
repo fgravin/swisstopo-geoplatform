@@ -42,6 +42,14 @@
           "codeCoverage": true
         }
       }
+    },
+    "@nx/angular:component": {
+      "style": "css",
+      "changeDetection": "OnPush",
+      "standalone": false,
+      "inlineStyle": true,
+      "skipTests": true,
+      "nameAndDirectoryFormat": "as-provided"
     }
   },
   "generators": {

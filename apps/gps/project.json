@@ -22,15 +22,29 @@
           }
         ],
         "styles": ["apps/gps/src/styles.css"],
-        "scripts": []
+        "scripts": [],
+        "preserveSymlinks": true,
+        "allowedCommonJsDependencies": [
+          "duration-relativetimeformat",
+          "papaparse",
+          "xlsx",
+          "chroma-js",
+          "@rgrove/parse-xml",
+          "@messageformat/core",
+          "rbush",
+          "@camptocamp/ogc-client",
+          "pbf",
+          "alasql",
+          "moment"
+        ]
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumWarning": "2mb",
+              "maximumError": "4mb"
             },
             {
               "type": "anyComponentStyle",
