@@ -2,7 +2,10 @@
   "name": "@swisstopo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve gps",
+    "format": "nx format:write"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "18.2.13",

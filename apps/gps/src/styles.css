@@ -1,5 +1,4 @@
+@import 'geonetwork-ui/style.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'geonetwork-ui/style.css';
