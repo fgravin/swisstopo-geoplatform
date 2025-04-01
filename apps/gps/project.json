@@ -69,7 +69,8 @@
           "buildTarget": "gps:build:production"
         },
         "development": {
-          "buildTarget": "gps:build:development"
+          "buildTarget": "gps:build:development",
+          "proxyConfig": "proxy-config.js"
         }
       },
       "defaultConfiguration": "development"

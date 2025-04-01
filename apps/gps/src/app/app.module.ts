@@ -16,7 +16,7 @@ import {
   provideGn4,
   provideRepositoryUrl,
   RouterService, ThemeService,
-  TRANSLATE_DEFAULT_CONFIG
+  TRANSLATE_DEFAULT_CONFIG, UiElementsModule, UiLayoutModule, UiSearchModule
 } from 'geonetwork-ui';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppRouterService } from './app.router.service'
@@ -25,6 +25,7 @@ import { RecordPageComponent } from './record/record-page/record-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HeaderComponent } from './platform/header/header.component';
 import { MenuComponent } from './platform/menu/menu.component';
+import { HomePageComponent } from './home/home-page/home-page.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,10 @@ import { MenuComponent } from './platform/menu/menu.component';
     BrowserAnimationsModule,
     FeatureSearchModule,
     FeatureCatalogModule,
+
+    UiLayoutModule,
+    UiSearchModule,
+    UiElementsModule,
 
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ logOnly: !isDevMode() }),
@@ -60,7 +65,7 @@ import { MenuComponent } from './platform/menu/menu.component';
     }),
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
-      searchRouteComponent: SearchPageComponent,
+      searchRouteComponent: HomePageComponent,
       recordRouteComponent: RecordPageComponent,
       organizationRouteComponent: SearchPageComponent
     }),
@@ -72,17 +77,19 @@ import { MenuComponent } from './platform/menu/menu.component';
     provideGn4(),
     provideRepositoryUrl(() => '/geonetwork/srv/api'),
     Gn4PlatformService,
+/*
     {
       provide: RouterService,
       useClass: AppRouterService,
     },
+*/
   ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
 constructor() {
   ThemeService.applyCssVariables(
-    '#e53940',
+    '#46596b',
 '#46596b'   , '#1f2937',
     'white',
     'Noto Sans',
