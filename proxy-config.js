@@ -1,7 +1,7 @@
 module.exports = {
   '/geonetwork': {
-    //target: 'https://www.geocat.ch',
-    target: 'http://localhost:8080',
+    target: 'https://www.geocat.ch',
+    // target: 'http://localhost:8080',
     secure: true,
     logLevel: 'debug',
     changeOrigin: true,
