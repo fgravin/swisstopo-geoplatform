@@ -12,7 +12,7 @@ import { CatalogRecord } from 'geonetwork-ui/libs/common/domain/src/lib/model/re
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchResultsComponent implements OnInit {
-  pageSize = 18
+  pageSize = 6
   totalPages_: number
   currentPage_: number
 

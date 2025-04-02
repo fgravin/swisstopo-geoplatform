@@ -1,0 +1,56 @@
+<a
+  class="group container-lg mx-auto flex cursor-pointer flex-wrap sm:flex-nowrap rounded-lg px-4 py-2 hover:scale-105 transition-transform "
+  [title]="record.title"
+  [attr.href]="linkHref"
+>
+  <div class="shrink-0 w-full sm:w-16 flex items-center">
+    <div
+      class="bg-gray-100 rounded-lg w-full "
+    >
+      <gn-ui-thumbnail
+        class="relative h-full w-full object-cover object-left-top"
+        [thumbnailUrl]="[
+          record.overviews?.[0]?.url?.toString(),
+          organization?.logoUrl?.toString(),
+        ]"
+        [fit]="['cover', 'contain']"
+      ></gn-ui-thumbnail>
+    </div>
+  </div>
+  <div
+    class="content grid grow relative sm:pl-6 sm:pr-12"
+    style="grid-template-columns: auto 70px"
+  >
+    <div class="">
+      <div
+        class="font-title text-lg text-title line-clamp-1"
+        data-cy="recordTitle"
+      >
+        {{ record.title }}
+      </div>
+    </div>
+    <div
+      class="text-sm abstract mt-4 mb-5 h-28 line-clamp-2 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[2.4rem] sm:line-clamp-2 sm:row-start-2 sm:mt-0"
+      data-cy="recordAbstract"
+    >
+      <gn-ui-markdown-parser
+        [textContent]="abstract"
+        [whitoutStyles]="true"
+      ></gn-ui-markdown-parser>
+    </div>
+    <div
+      class="icons flex flex-row col-start-1 row-start-4 sm:col-start-2 sm:row-start-3 sm:absolute sm:right-[0.4em]"
+    >
+      <ng-icon
+        *ngIf="isDownloadable"
+        class="text-primary opacity-45 mx-1"
+        name="matCloudDownloadOutline"
+      ></ng-icon>
+      <ng-icon
+        *ngIf="isViewable"
+        class="text-primary opacity-45 mx-1"
+        name="matMapOutline"
+      ></ng-icon>
+    </div>
+  </div>
+</a>

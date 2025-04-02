@@ -1,18 +1,6 @@
-<header class="flex items-center px-6 py-16 h-full">
-  <div
-    class=" relative h-full w-full mx-auto  flex flex-col justify-between "
-  >
-    <div class="text-5xl">Explorer les <span class="font-semibold"> données géographiques </span> suisses</div>
-
-    <div class="flex relative">
-      <gn-ui-fuzzy-search
-        class="text-[14px] grow mr-8 pointer-events-auto"
-        style="
-          --gn-ui-text-input-padding: 1.1em;
-        "
-        (itemSelected)="onFuzzySearchSelection($event)"
-        [autoFocus]="true"
-      ></gn-ui-fuzzy-search>
-    </div>
-  </div>
-</header>
+<gn-ui-fuzzy-search
+  class="text-[14px] grow mr-8 pointer-events-auto"
+  style="--gn-ui-text-input-padding: 1.1em"
+  (itemSelected)="onFuzzySearchSelection($event)"
+  [autoFocus]="true"
+></gn-ui-fuzzy-search>

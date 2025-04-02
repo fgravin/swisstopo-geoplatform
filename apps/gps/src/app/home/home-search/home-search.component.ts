@@ -8,7 +8,7 @@ import {
 import { CatalogRecord } from 'geonetwork-ui/libs/common/domain/src/lib/model/record'
 
 @Component({
-  selector: 'app-home-header',
+  selector: 'app-home-search',
   standalone: true,
   imports: [CommonModule, SearchInputComponent, FeatureSearchModule],
   templateUrl: './home-search.component.html',
@@ -19,15 +19,11 @@ export class HomeSearchComponent {
   constructor(public routerFacade: RouterFacade) {}
 
   onFuzzySearchSelection(record: CatalogRecord) {
-    console.log('select');
-   // this.routerFacade.goToMetadata(record)
+    console.log('select')
+    // this.routerFacade.goToMetadata(record)
   }
 
-  onMetadataSelection($event: CatalogRecord) {
+  onMetadataSelection($event: CatalogRecord) {}
 
-  }
-
-  onInputSubmitted($event: string) {
-
-  }
+  onInputSubmitted($event: string) {}
 }

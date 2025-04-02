@@ -15,17 +15,21 @@ import {
   Gn4PlatformService,
   provideGn4,
   provideRepositoryUrl,
-  RouterService, ThemeService,
-  TRANSLATE_DEFAULT_CONFIG, UiElementsModule, UiLayoutModule, UiSearchModule
-} from 'geonetwork-ui';
+  RouterService,
+  ThemeService,
+  TRANSLATE_DEFAULT_CONFIG,
+  UiElementsModule,
+  UiLayoutModule,
+  UiSearchModule,
+} from 'geonetwork-ui'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppRouterService } from './app.router.service'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HeaderComponent } from './platform/header/header.component';
-import { MenuComponent } from './platform/menu/menu.component';
-import { HomePageComponent } from './home/home-page/home-page.component';
+import { HeaderComponent } from './platform/header/header.component'
+import { MenuComponent } from './platform/menu/menu.component'
+import { HomePageComponent } from './home/home-page/home-page.component'
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,8 +51,8 @@ import { HomePageComponent } from './home/home-page/home-page.component';
         metaReducers: [],
         runtimeChecks: {
           strictActionImmutability: true,
-          strictStateImmutability: true
-        }
+          strictStateImmutability: true,
+        },
       }
     ),
     StoreRouterConnectingModule.forRoot(),
@@ -56,28 +60,28 @@ import { HomePageComponent } from './home/home-page/home-page.component';
       ...TRANSLATE_DEFAULT_CONFIG,
       loader: {
         provide: TranslateLoader,
-        useClass: EmbeddedTranslateLoader
-      }
+        useClass: EmbeddedTranslateLoader,
+      },
     }),
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
-      scrollPositionRestoration: 'enabled'
+      scrollPositionRestoration: 'enabled',
     }),
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
       searchRouteComponent: HomePageComponent,
       recordRouteComponent: RecordPageComponent,
-      organizationRouteComponent: SearchPageComponent
+      organizationRouteComponent: SearchPageComponent,
     }),
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),
     provideGn4(),
     provideRepositoryUrl(() => '/geonetwork/srv/api'),
     Gn4PlatformService,
-/*
+    /*
     {
       provide: RouterService,
       useClass: AppRouterService,
@@ -87,15 +91,14 @@ import { HomePageComponent } from './home/home-page/home-page.component';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-constructor() {
-  ThemeService.applyCssVariables(
-    '#46596b',
-'#46596b'   , '#1f2937',
-    'white',
-    'Noto Sans',
-
-  )
+  constructor() {
+    ThemeService.applyCssVariables(
+      '#46596b',
+      '#46596b',
+      'rgb(85,85,85)',
+      'white',
+      'Noto Sans',
+      'Noto Sans'
+    )
+  }
 }
-
-}
-
