@@ -79,7 +79,7 @@ import { HomePageComponent } from './home/home-page/home-page.component'
   providers: [
     importProvidersFrom(FeatureAuthModule),
     provideGn4(),
-    provideRepositoryUrl(() => '/geonetwork/srv/api'),
+    provideRepositoryUrl(() => 'https://www.geocat.ch/geonetwork/srv/api'),
     Gn4PlatformService,
     /*
     {
