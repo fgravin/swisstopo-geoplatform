@@ -15,7 +15,6 @@ import {
   Gn4PlatformService,
   provideGn4,
   provideRepositoryUrl,
-  RouterService,
   ThemeService,
   TRANSLATE_DEFAULT_CONFIG,
   UiElementsModule,
@@ -23,8 +22,6 @@ import {
   UiSearchModule,
 } from 'geonetwork-ui'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
-import { AppRouterService } from './app.router.service'
-import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HeaderComponent } from './platform/header/header.component'
@@ -71,7 +68,7 @@ import { HomePageComponent } from './home/home-page/home-page.component'
       searchStateId: 'mainSearch',
       searchRouteComponent: HomePageComponent,
       recordRouteComponent: RecordPageComponent,
-      organizationRouteComponent: SearchPageComponent,
+      organizationRouteComponent: HomePageComponent,
     }),
     HeaderComponent,
     MenuComponent,
