@@ -98,6 +98,16 @@
         "staticFilePath": "dist/apps/gps/browser",
         "spa": true
       }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx build gps --base-href=./",
+          "docker build . -f ./docker/Dockerfile --build-arg APP_NAME=gps -t oguyot/swissgeo-poc:latest"
+        ],
+        "parallel": false
+      }
     }
   }
 }

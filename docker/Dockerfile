@@ -1,0 +1,17 @@
+# This dockerfile should work for all traditional apps,
+# i.e. it only sets up a nginx server with the app dist folder
+
+FROM nginx:1.27-alpine
+
+ARG APP_NAME="gps"
+ENV APP_NAME=${APP_NAME}
+
+COPY dist/apps/${APP_NAME}/browser /usr/share/nginx/html/${APP_NAME}
+
+# copy default NGINX conf & put the app name in it
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+RUN sed -i "s/APP_NAME/${APP_NAME}/" /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
