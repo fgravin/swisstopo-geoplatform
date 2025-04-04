@@ -9,11 +9,17 @@ import {
   MAP_VIEW_CONSTRAINTS,
   MapFacade,
   MapStateContainerComponent,
+  MdViewFacade,
+  RecordMetaComponent,
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
   SearchFacade,
 } from 'geonetwork-ui'
 import { RecordPreviewRowComponent } from '../record-preview-row/record-preview-row.component'
+import { CatalogRecord } from 'geonetwork-ui/libs/common/domain/src/lib/model/record'
+import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
+import { LetDirective } from '@ngrx/component'
+import { HeaderRecordComponent } from '../header-record/header-record.component'
 
 @Component({
   selector: 'app-home-page',
@@ -24,6 +30,9 @@ import { RecordPreviewRowComponent } from '../record-preview-row/record-preview-
     FeatureSearchModule,
     MapStateContainerComponent,
     FeatureMapModule,
+    RecordMetadataComponent,
+    LetDirective,
+    HeaderRecordComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
@@ -64,7 +73,8 @@ import { RecordPreviewRowComponent } from '../record-preview-row/record-preview-
 export class HomePageComponent implements OnInit {
   constructor(
     private searchFacade: SearchFacade,
-    private mapFacade: MapFacade
+    private mapFacade: MapFacade,
+    public mdViewFacade: MdViewFacade
   ) {}
 
   ngOnInit() {
@@ -81,5 +91,10 @@ export class HomePageComponent implements OnInit {
         center: [8.4265137, 46.8075795],
       },
     })
+  }
+
+  onMetadataSelection(record: CatalogRecord) {
+    this.mdViewFacade.setIncompleteMetadata(record)
+    this.mdViewFacade.loadFull(record.uniqueIdentifier)
   }
 }

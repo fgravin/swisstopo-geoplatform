@@ -11,6 +11,7 @@ import {
   EmbeddedTranslateLoader,
   FeatureAuthModule,
   FeatureCatalogModule,
+  FeatureRecordModule,
   FeatureSearchModule,
   Gn4PlatformService,
   provideGn4,
@@ -35,13 +36,14 @@ import { HomePageComponent } from './home/home-page/home-page.component'
     BrowserAnimationsModule,
     FeatureSearchModule,
     FeatureCatalogModule,
+    FeatureRecordModule,
 
     UiLayoutModule,
     UiSearchModule,
     UiElementsModule,
 
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ logOnly: !isDevMode() }),
+    StoreDevtoolsModule.instrument({}),
     StoreModule.forRoot(
       {},
       {
@@ -90,8 +92,8 @@ import { HomePageComponent } from './home/home-page/home-page.component'
 export class AppModule {
   constructor() {
     ThemeService.applyCssVariables(
-      '#46596b',
-      '#46596b',
+      '#0c4a6e',
+      '#0c4a6e',
       'rgb(85,85,85)',
       'white',
       'Noto Sans',

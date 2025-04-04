@@ -1,0 +1,67 @@
+<div *ngIf="(metadataViewFacade.error$ | async) === null">
+  <div id="about" class="px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto">
+    <gn-ui-metadata-info
+      class="sm:block"
+      *ngIf="(metadataViewFacade.isPresent$ | async) === false"
+      [metadata]="{}"
+      [incomplete]="true"
+    >
+    </gn-ui-metadata-info>
+    <div
+      *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+      class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
+    >
+      <div class="sm:col-span-2">
+        <gn-ui-metadata-info
+          class="sm:block"
+          [metadata]="metadataViewFacade.metadata$ | async"
+          [incomplete]="metadataViewFacade.isIncomplete$ | async"
+          (keyword)="onInfoKeywordClick($event)"
+        >
+        </gn-ui-metadata-info>
+      </div>
+      <div class="sm:mt-[-185px]">
+        <gn-ui-image-overlay-preview
+          class="block h-[185px] mb-5"
+          [imageUrl]="thumbnailUrl$ | async"
+          (isPlaceholderShown)="showOverlay = !$event"
+          *ngIf="showOverlay"
+        >
+        </gn-ui-image-overlay-preview>
+        <gn-ui-metadata-contact
+          [metadata]="metadataViewFacade.metadata$ | async"
+        >
+        </gn-ui-metadata-contact>
+        <div *ngIf="metadataQualityDisplay">
+          <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
+            record.metadata.quality
+          </p>
+          <gn-ui-metadata-quality
+            [metadata]="metadataViewFacade.metadata$ | async"
+            [metadataQualityDisplay]="metadataQualityDisplay"
+          ></gn-ui-metadata-quality>
+        </div>
+        <gn-ui-metadata-catalog
+          *ngIf="sourceLabel$ | async as sourceLabel"
+          [sourceLabel]="sourceLabel"
+        >
+        </gn-ui-metadata-catalog>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"
+    *ngIf="metadataViewFacade.error$ | async as error"
+  >
+    <gn-ui-error
+      *ngIf="error.notFound"
+      [type]="errorTypes.RECORD_NOT_FOUND"
+      [recordId]="(metadataViewFacade.metadata$ | async).uniqueIdentifier"
+    ></gn-ui-error>
+    <gn-ui-error
+      *ngIf="error.otherError"
+      [type]="errorTypes.RECEIVED_ERROR"
+      [error]="error.otherError"
+    ></gn-ui-error>
+  </div>
+</div>

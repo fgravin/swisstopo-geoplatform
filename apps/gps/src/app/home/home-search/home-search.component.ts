@@ -20,10 +20,5 @@ export class HomeSearchComponent {
 
   onFuzzySearchSelection(record: CatalogRecord) {
     console.log('select')
-    // this.routerFacade.goToMetadata(record)
   }
-
-  onMetadataSelection($event: CatalogRecord) {}
-
-  onInputSubmitted($event: string) {}
 }

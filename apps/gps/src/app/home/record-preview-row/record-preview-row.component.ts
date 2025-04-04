@@ -23,7 +23,7 @@ import {
 import { DataService } from 'geonetwork-ui'
 
 @Component({
-  selector: 'gn-ui-record-preview-row',
+  selector: 'app-record-preview-row',
   templateUrl: './record-preview-row.component.html',
   styleUrls: ['./record-preview-row.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

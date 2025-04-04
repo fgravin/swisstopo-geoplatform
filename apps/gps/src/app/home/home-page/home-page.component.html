@@ -9,11 +9,12 @@
       <div class="flex z-0">
         <gn-ui-results-list-container
           [metadataQualityDisplay]="false"
+          (mdSelect)="onMetadataSelection($event)"
           showMore="button"
         ></gn-ui-results-list-container>
       </div>
     </div>
-    <div class="w-1/2">
+    <div class="w-1/2 relative">
       <div class="h-48 flex items-center justify-center">
         <div class="flex flex-col text-center text-title">
           <div class="text-5xl font-bold">Bienvenue</div>
@@ -22,6 +23,17 @@
       </div>
       <div class="h-[600px] sticky top-6">
         <gn-ui-map-state-container></gn-ui-map-state-container>
+      </div>
+      <div
+        *ngIf="mdViewFacade.isPresent$ | async"
+        class="absolute top-0 left-0 bg-sky-50"
+      >
+        <app-header-record
+          [metadata]="mdViewFacade.metadata$ | async"
+        ></app-header-record>
+        <app-record-metadata
+          [metadataQualityDisplay]="false"
+        ></app-record-metadata>
       </div>
     </div>
   </div>
