@@ -16,16 +16,14 @@
     </div>
   </div>
   <div
-    class="content grid grow relative sm:pl-6 sm:pr-12"
+    class="content grid grow relative sm:pl-6 sm:pr-6"
     style="grid-template-columns: auto 70px"
   >
-    <div class="">
-      <div
-        class="font-title text-lg text-title line-clamp-1"
-        data-cy="recordTitle"
-      >
-        {{ record.title }}
-      </div>
+    <div
+      class="font-title text-lg text-title line-clamp-1"
+      data-cy="recordTitle"
+    >
+      {{ record.title }}
     </div>
     <div
       class="text-sm abstract mt-4 mb-5 h-28 line-clamp-2 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[2.4rem] sm:line-clamp-2 sm:row-start-2 sm:mt-0"
@@ -44,14 +42,23 @@
       {{ organization?.name }}
     </div>
   </div>
-  <div class="w-20 shrink-0 flex items-center">
+  <div class="shrink-0 flex items-center">
     <ng-container *ngIf="mapLink">
       <gn-ui-button
-        [type]="'outline'"
-        (buttonClick)="handleLinkClick(mapLink)"
-        extraClass="!py-[8px] !px-[12px]"
+        [type]="'primary'"
+        (buttonClick)="handleLinkClick(mapLink, true)"
+        class="w-[70px] lg:max-w-[105px]"
+        title="Cette couche sera affichée seule sur la carte"
       >
         <div class="flex flex-wrap text-[12px]">Voir sur la carte</div>
+      </gn-ui-button>
+      <gn-ui-button
+        [type]="'outline'"
+        (buttonClick)="handleLinkClick(mapLink, false)"
+        class="hidden lg:block lg:max-w-[105px]"
+        title="Cette couche sera ajoutée aux autres couches présentes sur la carte"
+      >
+        <div class="flex flex-wrap text-[12px]">Afficher en superposition</div>
       </gn-ui-button>
     </ng-container>
   </div>

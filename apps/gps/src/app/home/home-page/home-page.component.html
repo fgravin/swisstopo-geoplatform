@@ -1,8 +1,8 @@
 <div class="flex flex-col container relative w-full mx-auto">
-  <div class="flex gap-8">
+  <div class="flex">
     <div class="w-1/2">
       <div
-        class="h-48 flex items-center sticky -top-12 z-10 bg-gradient-to-b from-white to-transparent from-80%"
+        class="h-48 pr-8 flex items-center sticky -top-12 z-10 bg-gradient-to-b from-white to-transparent from-80%"
       >
         <app-home-search class="grow"></app-home-search>
       </div>
@@ -21,19 +21,21 @@
           <div class="text-lg">sur la plateforme des géodonnées suisses</div>
         </div>
       </div>
-      <div class="h-[600px] sticky top-6">
+      <div class="h-screen sticky top-6">
         <gn-ui-map-state-container></gn-ui-map-state-container>
       </div>
       <div
         *ngIf="mdViewFacade.isPresent$ | async"
-        class="absolute top-0 left-0 bg-sky-50"
+        class="absolute top-0 left-0 bottom-0 bg-sky-50"
       >
-        <app-header-record
-          [metadata]="mdViewFacade.metadata$ | async"
-        ></app-header-record>
-        <app-record-metadata
-          [metadataQualityDisplay]="false"
-        ></app-record-metadata>
+        <div class="sticky top-0">
+          <app-header-record
+            [metadata]="mdViewFacade.metadata$ | async"
+          ></app-header-record>
+          <app-record-metadata
+            [metadataQualityDisplay]="false"
+          ></app-record-metadata>
+        </div>
       </div>
     </div>
   </div>

@@ -1,3 +1,17 @@
 .limit-organisation-with-quality {
   max-width: calc(100% - 170px);
 }
+
+:host {
+  --gn-ui-button-padding: 8px 12px;
+}
+
+/* only from lg size and up */
+@media (min-width: 1024px) {
+  gn-ui-button:first-of-type {
+    --gn-ui-button-rounded: 5px 0 0 5px;
+  }
+  gn-ui-button:last-of-type {
+    --gn-ui-button-rounded: 0 5px 5px 0;
+  }
+}

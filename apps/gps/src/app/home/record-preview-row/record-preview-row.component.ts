@@ -92,7 +92,7 @@ export class RecordPreviewRowComponent extends RecordPreviewComponent {
     return throwError(() => 'protocol not supported')
   }
 
-  async handleLinkClick(link: DatasetOnlineResource) {
+  async handleLinkClick(link: DatasetOnlineResource, clearMap: boolean) {
     const record = this.record
     if (!record.onlineResources) return
 
