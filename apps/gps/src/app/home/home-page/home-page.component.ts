@@ -8,6 +8,7 @@ import {
   FeatureSearchModule,
   MAP_VIEW_CONSTRAINTS,
   MapFacade,
+  MapLegendComponent,
   MapStateContainerComponent,
   MdViewFacade,
   NotificationsContainerComponent,
@@ -32,6 +33,7 @@ import { HeaderRecordComponent } from '../header-record/header-record.component'
     RecordMetadataComponent,
     HeaderRecordComponent,
     NotificationsContainerComponent,
+    MapLegendComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
@@ -72,7 +74,7 @@ import { HeaderRecordComponent } from '../header-record/header-record.component'
 export class HomePageComponent implements OnInit {
   constructor(
     private searchFacade: SearchFacade,
-    private mapFacade: MapFacade,
+    public mapFacade: MapFacade,
     public mdViewFacade: MdViewFacade
   ) {}
 
