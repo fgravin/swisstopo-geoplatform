@@ -23,6 +23,9 @@
       </div>
       <div class="h-screen sticky top-6">
         <gn-ui-map-state-container></gn-ui-map-state-container>
+        <gn-ui-notifications-container
+          class="absolute top-0"
+        ></gn-ui-notifications-container>
       </div>
       <div
         *ngIf="mdViewFacade.isPresent$ | async"

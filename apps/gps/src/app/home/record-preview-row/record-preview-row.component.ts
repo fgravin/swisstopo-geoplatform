@@ -1,26 +1,19 @@
 import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
 import {
   ButtonComponent,
+  DataService,
   LinkClassifierService,
   LinkUsage,
   MapFacade,
   MarkdownParserComponent,
+  NotificationsService,
   RecordPreviewComponent,
   ThumbnailComponent,
 } from 'geonetwork-ui'
-import { NgIcon } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
-import {
-  DatasetOnlineResource,
-  DatasetRecord,
-} from 'geonetwork-ui/libs/common/domain/src/lib/model/record'
+import { DatasetOnlineResource } from 'geonetwork-ui/libs/common/domain/src/lib/model/record'
 import { firstValueFrom, map, Observable, of, tap, throwError } from 'rxjs'
-import {
-  createViewFromLayer,
-  MapContext,
-  MapContextLayer,
-} from '@geospatial-sdk/core'
-import { DataService } from 'geonetwork-ui'
+import { createViewFromLayer, MapContextLayer } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'app-record-preview-row',
@@ -31,7 +24,6 @@ import { DataService } from 'geonetwork-ui'
     CommonModule,
     ThumbnailComponent,
     MarkdownParserComponent,
-    NgIcon,
     ButtonComponent,
   ],
   standalone: true,
@@ -56,17 +48,22 @@ export class RecordPreviewRowComponent extends RecordPreviewComponent {
       ) {
         continue
       }
+      if (/^https?:\/\/localhost/.test(link.url.toString())) {
+        continue
+      }
       let currentPriority = 1
       if (
         'accessServiceProtocol' in link &&
         link.accessServiceProtocol === 'wmts'
       ) {
         currentPriority = 3
+        if (!link.name) continue
       } else if (
         'accessServiceProtocol' in link &&
         link.accessServiceProtocol === 'wms'
       ) {
         currentPriority = 2
+        if (!link.name) continue
       }
       if (currentPriority > bestPriority) {
         bestLink = link
@@ -81,7 +78,8 @@ export class RecordPreviewRowComponent extends RecordPreviewComponent {
     protected elementRef: ElementRef,
     private linkClassifier: LinkClassifierService,
     private mapFacade: MapFacade,
-    private dataService: DataService
+    private dataService: DataService,
+    private notificationsService: NotificationsService
   ) {
     super(elementRef)
   }
@@ -123,29 +121,49 @@ export class RecordPreviewRowComponent extends RecordPreviewComponent {
   }
 
   async handleLinkClick(link: DatasetOnlineResource, clearMap: boolean) {
-    const context = await firstValueFrom(this.mapFacade.context$)
-    const dataLayer = await firstValueFrom(this.getLayerFromLink(link))
-    const view = await createViewFromLayer(dataLayer).catch((error) => {
-      console.warn('Could not zoom on layer, error is:', error.stack)
-      return context.view
-    })
-    // TODO: generate geojson from all extents
-    // const extent: MapContextLayer = {
-    //   type: 'geojson',
-    //   data: record.spatialExtents
-    // }
-    if (clearMap) {
+    try {
+      const context = await firstValueFrom(this.mapFacade.context$)
+      const dataLayer = await firstValueFrom(this.getLayerFromLink(link))
+      const view = await createViewFromLayer(dataLayer).catch((e) => {
+        console.warn('Could not create view from layer', e.stack)
+        return null
+      })
+      // TODO: generate geojson from all extents
+      // const extent: MapContextLayer = {
+      //   type: 'geojson',
+      //   data: record.spatialExtents
+      // }
+      const layers = clearMap ? [dataLayer] : [...context.layers, dataLayer]
       this.mapFacade.applyContext({
         ...context,
-        layers: [dataLayer],
-        view,
+        layers,
+        ...(view && { view }),
       })
-    } else {
-      this.mapFacade.applyContext({
-        ...context,
-        layers: [...context.layers, dataLayer],
-        view,
-      })
+    } catch (e) {
+      this.notificationsService.showNotification(
+        {
+          type: 'error',
+          title: 'Layer could not be added',
+          text: e.message,
+        },
+        undefined,
+        e
+      )
+      return
     }
+    const notifications = await firstValueFrom(
+      this.notificationsService.notifications$
+    )
+    notifications.forEach((n) =>
+      this.notificationsService.removeNotificationById(n.id)
+    )
+    this.notificationsService.showNotification(
+      {
+        type: 'success',
+        title: 'Layer was added successfully!',
+        text: '',
+      },
+      2000
+    )
   }
 }

@@ -10,7 +10,7 @@ import {
   MapFacade,
   MapStateContainerComponent,
   MdViewFacade,
-  RecordMetaComponent,
+  NotificationsContainerComponent,
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
   SearchFacade,
@@ -18,7 +18,6 @@ import {
 import { RecordPreviewRowComponent } from '../record-preview-row/record-preview-row.component'
 import { CatalogRecord } from 'geonetwork-ui/libs/common/domain/src/lib/model/record'
 import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
-import { LetDirective } from '@ngrx/component'
 import { HeaderRecordComponent } from '../header-record/header-record.component'
 
 @Component({
@@ -31,8 +30,8 @@ import { HeaderRecordComponent } from '../header-record/header-record.component'
     MapStateContainerComponent,
     FeatureMapModule,
     RecordMetadataComponent,
-    LetDirective,
     HeaderRecordComponent,
+    NotificationsContainerComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
