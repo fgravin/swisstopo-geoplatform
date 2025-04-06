@@ -38,13 +38,43 @@ import { DataService } from 'geonetwork-ui'
 })
 export class RecordPreviewRowComponent extends RecordPreviewComponent {
   get mapLink(): DatasetOnlineResource {
-    const mapLinks = (this.record as DatasetRecord)?.onlineResources.filter(
-      (link) =>
-        this.linkClassifier.hasUsage(link, LinkUsage.MAP_API) &&
-        !link.url.host.startsWith('localhost')
-    ) as DatasetOnlineResource[]
+    if (!this.record.onlineResources) return null
 
-    return mapLinks?.length > 0 ? mapLinks[0] : null
+    let bestLink: DatasetOnlineResource = null
+    let bestPriority = 0
+    for (const link of this.record.onlineResources) {
+      if (
+        link.type !== 'link' &&
+        link.type !== 'download' &&
+        link.type !== 'service'
+      ) {
+        continue
+      }
+      if (
+        !this.linkClassifier.hasUsage(link, LinkUsage.MAP_API) &&
+        !this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
+      ) {
+        continue
+      }
+      let currentPriority = 1
+      if (
+        'accessServiceProtocol' in link &&
+        link.accessServiceProtocol === 'wmts'
+      ) {
+        currentPriority = 3
+      } else if (
+        'accessServiceProtocol' in link &&
+        link.accessServiceProtocol === 'wms'
+      ) {
+        currentPriority = 2
+      }
+      if (currentPriority > bestPriority) {
+        bestLink = link
+        bestPriority = currentPriority
+      }
+    }
+
+    return bestLink
   }
 
   constructor(
@@ -93,60 +123,29 @@ export class RecordPreviewRowComponent extends RecordPreviewComponent {
   }
 
   async handleLinkClick(link: DatasetOnlineResource, clearMap: boolean) {
-    const record = this.record
-    if (!record.onlineResources) return
-
-    const linksWithRank: Array<[DatasetOnlineResource, number]> = []
-    for (const link of record.onlineResources) {
-      if (
-        link.type !== 'link' &&
-        link.type !== 'download' &&
-        link.type !== 'service'
-      ) {
-        continue
-      }
-      let rank = -1
-      // give priority to APIs instead of full datasets
-      // give priority to WMTS and then WMS
-      if (
-        !this.linkClassifier.hasUsage(link, LinkUsage.MAP_API) &&
-        !this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
-      ) {
-        continue
-      }
-      rank = 20
-      if (
-        'accessServiceProtocol' in link &&
-        link.accessServiceProtocol === 'wmts'
-      ) {
-        rank = 22
-      } else if (
-        'accessServiceProtocol' in link &&
-        link.accessServiceProtocol === 'wms'
-      ) {
-        rank = 21
-      }
-      linksWithRank.push([link, rank])
-    }
-
-    if (!linksWithRank.length) return
-
-    const bestLink = linksWithRank.sort(
-      ([, rankA], [, rankB]) => rankB - rankA
-    )[0]
-
     const context = await firstValueFrom(this.mapFacade.context$)
-    const dataLayer = await firstValueFrom(this.getLayerFromLink(bestLink[0]))
-    const view = await createViewFromLayer(dataLayer)
+    const dataLayer = await firstValueFrom(this.getLayerFromLink(link))
+    const view = await createViewFromLayer(dataLayer).catch((error) => {
+      console.warn('Could not zoom on layer, error is:', error.stack)
+      return context.view
+    })
     // TODO: generate geojson from all extents
     // const extent: MapContextLayer = {
     //   type: 'geojson',
     //   data: record.spatialExtents
     // }
-    this.mapFacade.applyContext({
-      ...context,
-      layers: [dataLayer],
-      view,
-    })
+    if (clearMap) {
+      this.mapFacade.applyContext({
+        ...context,
+        layers: [dataLayer],
+        view,
+      })
+    } else {
+      this.mapFacade.applyContext({
+        ...context,
+        layers: [...context.layers, dataLayer],
+        view,
+      })
+    }
   }
 }
