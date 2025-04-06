@@ -1,9 +1,9 @@
-const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
-const { join } = require('path');
-const baseConfig = require('../../node_modules/geonetwork-ui/tailwind.base.config');
+import { createGlobPatternsForDependencies } from '@nx/angular/tailwind'
+import { join } from 'path'
+import baseConfig from 'geonetwork-ui/tailwind.base.config.js'
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   presets: [baseConfig],
   content: [
     './node_modules/geonetwork-ui/**/*.mjs',
@@ -14,4 +14,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-};
+}
